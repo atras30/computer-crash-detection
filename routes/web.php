@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\HomeController;
+use App\Models\Disease;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,5 +30,7 @@ Route::post('/auth/logout', [AuthenticationController::class, "logout"])->name("
 //Admin endpoints
 Route::get('/admin', [AdminController::class, "index"])->name("admin.dashboard");
 Route::get('/admin/data/gejala', [AdminController::class, "dataGejala"])->name("data.gejala");
+Route::post('/admin/data/gejala', [AdminController::class, "addDisease"])->name("admin.disease");
+Route::delete('/admin/data/gejala', [AdminController::class, "deleteDisease"])->name("admin.disease");
 Route::get('/admin/data/penyakit', [AdminController::class, "dataPenyakit"])->name("data.penyakit");
 Route::get('/admin/data/riwayat', [AdminController::class, "dataRiwayat"])->name("data.riwayat");

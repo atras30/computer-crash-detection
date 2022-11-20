@@ -8,82 +8,21 @@
             </div>
 
             <div class="choose-symptom-list mb-3">
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-                    <label class="form-check-label" for="flexCheckDefault1">
-                        C01 | Apakah laptop tidak menampilkan gambar pada layar?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-                    <label class="form-check-label" for="flexCheckDefault2">
-                        C02 | Apakah mesin tidak hidup?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-                    <label class="form-check-label" for="flexCheckDefault3">
-                        C03 | Apakah indikator lampu yang terhubung pada charger laptop mati?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
-                    <label class="form-check-label" for="flexCheckDefault4">
-                        C01 | Apakah laptop tidak menampilkan gambar pada layar?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault5">
-                    <label class="form-check-label" for="flexCheckDefault5">
-                        C04 | Apakah laptop mati ketika dicolokkan ke charger?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault6">
-                    <label class="form-check-label" for="flexCheckDefault6">
-                        C05 | Apakah masih bisa nenampilkan gambar apabila dihubungkan ke LCD eksternal melalui VGA card?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault7">
-                    <label class="form-check-label" for="flexCheckDefault7">
-                        C06 | Apakah laptop tidak menampilkan gambar pada layar?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault8">
-                    <label class="form-check-label" for="flexCheckDefault8">
-                        C06 | Apakah laptop tidak menampilkan gambar pada layar?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault9">
-                    <label class="form-check-label" for="flexCheckDefault9">
-                        C07 | Apakah mesin tidak hidup?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault10">
-                    <label class="form-check-label" for="flexCheckDefault10">
-                        C08 | Apakah indikator lampu yang terhubung pada charger laptop mati?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11">
-                    <label class="form-check-label" for="flexCheckDefault11">
-                        C09 | Apakah laptop mati ketika dicolokkan ke charger?
-                    </label>
-                </div>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault12">
-                    <label class="form-check-label" for="flexCheckDefault12">
-                        C05 | Apakah masih bisa nenampilkan gambar apabila dihubungkan ke LCD eksternal melalui VGA card?
-                    </label>
+                <div id="choose-symptom-form">
+                    @foreach ($symptoms as $symptom)
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="symptom_id_{{ $symptom->id }}"
+                                value="{{ $symptom->id }}" id="checkbox_{{ $symptom->id }}" @if($checkedCheckboxes && in_array($symptom->id, $checkedCheckboxes)) checked @endif>
+                            <label class="form-check-label" for="checkbox_{{ $symptom->id }}">
+                                G{{ sprintf('%02d', $symptom->id) }} - {{ $symptom->body }} @if(isset($symptom->possible_diseases)) <b>-> {{$symptom->possible_diseases}}</b> @endif
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
             <div class="d-flex justify-content-center align-items-center">
-                <a class="btn btn-primary" href="{{route("user.result")}}">
+                <a id="submit-button" class="btn btn-primary">
                     Submit
                 </a>
             </div>
@@ -92,5 +31,58 @@
 
     <img class="w-100 position-absolute start-0 top-0" style="height: 110%" src="{{ asset('img/choose_symptom.png') }}"
         alt="Background Image">
-    <div class="w-100 position-absolute start-0 top-0 h-100" style="background-color: rgba(0,0,0,.2); z-index:-1">
-    @endsection
+    <div class="w-100 position-absolute start-0 top-0 h-100" style="background-color: rgba(0,0,0,.2); z-index:-1" />
+
+    <form action="{{route("user.choose_symptom")}}" id="choose-symptom-hidden-form" class="d-none">
+        {{-- Value will be set by javascript below --}}
+        <input type="text" name="checked_checkboxes" id="checked-checkbox-input">
+    </form>
+
+    <script defer>
+        let form = [...document.getElementsByClassName("form-check-input")];
+        let labels = [...document.getElementsByClassName("form-check-label")];
+
+        let totalSymptoms = [];
+        labels.forEach(label => {
+            if(!label.textContent.trim().split("->")[1]) {
+                return;
+            }
+
+            let symptoms = label.textContent.trim().split("->")[1].split("|");
+            symptoms.forEach(symptom => {
+                if(!totalSymptoms.includes(symptom.trim())) {
+                    totalSymptoms.push(symptom.trim());
+                }
+            });
+        })
+
+        const submitButton = document.querySelector("#submit-button");
+        submitButton.addEventListener("click", (event) => {
+            window.location.href=`{{route("user.result")}}?symptoms=${JSON.stringify(totalSymptoms)}`;
+        });
+
+        form.forEach(input => {
+            input.addEventListener('change', (event) => {
+                let checkedCheckbox = [];
+
+                form.forEach(eachInput => {
+                    if (eachInput.checked) {
+                        checkedCheckbox.push(parseInt(eachInput.value));
+                    }
+                });
+
+                // checked checkbox id's buffered inside checkedCheckbox's array.
+                submitForm(checkedCheckbox);
+            })
+        });
+
+        const submitForm = (checkedCheckbox) => {
+            const checkedCheckboxInput = document.querySelector("#checked-checkbox-input");
+
+            checkedCheckboxInput.value = JSON.stringify(checkedCheckbox);
+
+            const chooseSymptomForm = document.querySelector("#choose-symptom-hidden-form");
+            chooseSymptomForm.submit();
+        }
+    </script>
+@endsection

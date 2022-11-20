@@ -26,7 +26,7 @@
                             <i class="bi bi-shield-fill-plus fs-1"></i>
 
                             <div class="d-flex flex-column justify-content-center align-items-center">
-                                <div class="fs-1 fw-normal">74</div>
+                                <div class="fs-1 fw-normal">{{$totalGejala}}</div>
                                 <div class="text-center">Gejala</div>
                             </div>
                         </h5>
@@ -43,7 +43,7 @@
                             <i class="bi bi-virus fs-1"></i>
 
                             <div class="d-flex flex-column justify-content-center align-items-center">
-                                <div class="fs-1 fw-normal">74</div>
+                                <div class="fs-1 fw-normal">{{$totalDisease}}</div>
                                 <div class="text-center">Data Penyakit</div>
                             </div>
                         </h5>
@@ -60,7 +60,7 @@
                             <i class="bi bi-journal-text fs-1"></i>
 
                             <div class="d-flex flex-column justify-content-center align-items-center">
-                                <div class="fs-1 fw-normal">74</div>
+                                <div class="fs-1 fw-normal">0</div>
                                 <div class="text-center">Riwayat</div>
                             </div>
                         </h5>

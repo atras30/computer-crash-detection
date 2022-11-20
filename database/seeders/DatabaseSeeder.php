@@ -134,70 +134,87 @@ class DatabaseSeeder extends Seeder
         // === DISEASE ===
         Disease::create([
             'body' => 'Monitor Rusak',
+            'path' => 'monitor_rusak.jpeg'
         ]);
 
         Disease::create([
             'body' => 'Memori Rusak',
+            'path' => 'memori_rusak.jpg'
         ]);
 
         Disease::create([
             'body' => 'HDD Rusak',
+            'path' => 'hdd_rusak.jpeg'
         ]);
 
         Disease::create([
             'body' => 'VGA Rusak',
+            'path' => 'vga_rusak.jpg'
         ]);
 
         Disease::create([
             'body' => 'Sound Card Rusak',
+            'path' => 'sound_card_rusak.jpeg'
         ]);
 
         Disease::create([
             'body' => 'OS Bermasalah',
+            'path' => 'os_bermasalah.png'
         ]);
 
         Disease::create([
             'body' => 'Aplikasi Crash/Rusak',
+            'path' => 'aplikasi_crash.png'
         ]);
 
         Disease::create([
             'body' => 'Power Suply Rusak',
+            'path' => 'power_suply_rusak.jpg'
         ]);
 
         Disease::create([
             'body' => 'Prosesor Rusak',
+            'path' => 'processor_rusak.jpg'
         ]);
 
         Disease::create([
             'body' => 'Memory Kurang',
+            'path' => 'memori_penuh.jpeg'
         ]);
 
         Disease::create([
             'body' => 'Memory VGA Kurang',
+            'path' => 'memori_vga_kurang.jpeg'
         ]);
 
         Disease::create([
             'body' => 'Clock Prosesor Kurang Tinggi',
+            'path' => 'clock_processor_kurang_tinggi.jpeg'
         ]);
 
         Disease::create([
             'body' => 'Kabel IDE/SATA/ATA Rusak',
+            'path' => 'kabel_sata_rusak.jpeg'
         ]);
 
         Disease::create([
             'body' => 'Kurang Daya Pada PSU',
+            'path' => 'kurang_daya_pada_psu.jpg'
         ]);
 
         Disease::create([
             'body' => 'Perangakat USB rusak',
+            'path' => 'perangkat_usb_rusak.jpg'
         ]);
 
         Disease::create([
             'body' => 'Keyboard Rusak',
+            'path' => 'keyboard_rusak.jpeg'
         ]);
 
         Disease::create([
             'body' => 'Mouse Rusak',
+            'path' => 'mouse_rusak.jpeg'
         ]);
 
         DiseaseRelation::create([
@@ -228,6 +245,10 @@ class DatabaseSeeder extends Seeder
             'symptom_id' => 11
         ]);
 
+        DiseaseRelation::create([
+            'disease_id' => 2,
+            'symptom_id' => 12
+        ]);
 
         DiseaseRelation::create([
             'disease_id' => 3,

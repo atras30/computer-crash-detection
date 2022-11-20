@@ -7,42 +7,22 @@
                 Hasil Diagnosis
             </div>
 
-            <div class="result mb-3 d-flex justify-content-evenly">
-                <div class="p-2 col-4">
-                    <div class="modal-1 rounded p-3" style="background-color: rgba(228, 186, 109, 1);">
-                        <div class="result-title fw-semibold fs-5">
-                            Rusak Pada IC Power
-                        </div>
+            <div class="result mb-3 d-flex flex-wrap justify-content-evenly">
+                @foreach ($diseases as $disease)
+                    <div class="p-2 col-4">
+                        <div class="rounded p-3" style="background-color: rgba(228, 186, 109, 1);">
+                            <div class="result-title fw-semibold fs-5 text-center mb-2">
+                                {{$disease->body}}
+                            </div>
 
-                        <div class="grafik">
-                            Grafik
+                            <img class="image img-thumbnail mb-2" src="{{asset("img/diseases/{$disease->path}")}}"/>
+
+                            <div class="solusi">
+                                <span class="fw-bold">Solusi :</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi aspernatur ad illo aliquid suscipit dicta nulla sapiente pariatur, veniam et?
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="p-2 col-4">
-                    <div class="modal-2 rounded p-3" style="background-color: rgba(228, 186, 109, 1);">
-                        <div class="result-title fw-semibold fs-5">
-                            Rusak pada IC VGA
-                        </div>
-
-                        <div class="grafik">
-                            Grafik
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-2 col-4">
-                    <div class="modal-3 rounded p-3" style="background-color: rgba(228, 186, 109, 1);">
-                        <div class="result-title fw-semibold fs-5">
-                            Rusak pada Inverter/ gangguan pada fleksibel kabel
-                        </div>
-
-                        <div class="grafik">
-                            Grafik
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

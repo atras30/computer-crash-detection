@@ -12,7 +12,7 @@ class AuthenticationController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect(route("user.home"));
+        return redirect()->intended(route("user.home"));
     }
 
     public function loginVerification(Request $request) {
